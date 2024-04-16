@@ -1,9 +1,12 @@
+import datetime
+import json
 import math
 import numpy as np
 from python_tsp.exact import solve_tsp_dynamic_programming, solve_tsp_brute_force
 from tsp_plot import plotTSP
 import time
 import csv
+import requests
 
 
 def get_distances_for_nodes(nodes):
@@ -57,29 +60,123 @@ def get_nodes():
 
         lines = list(readCSV)
 
-        filtered = []
-        np.random.seed(1)
+        # filtered = []
+        # np.random.seed(1)
 
-        count = 10
+        # count = 10
 
-        for i in range(0, count):
-            new_line = lines[np.random.randint(0, len(lines))]
-            if filtered.__contains__(new_line):
-                i -= 1
-            else:
-                filtered.append(new_line)
+        # for i in range(0, count):
+        #     new_line = lines[np.random.randint(0, len(lines))]
+        #     if filtered.__contains__(new_line):
+        #         i -= 1
+        #     else:
+        #         filtered.append(new_line)
 
-        nodes = [(float(line[2]), float(line[3])) for line in filtered]
+        filtered = [line for line in lines if line[0] == "Tipaza"]
+        filtered = filtered[:9]
+
+        nodes = [(float(line[2]), float(line[3]), line[0] + "_" + line[1]) for line in filtered]
 
     return nodes
+
+
+app_id = "a2f023b2"
+app_key = "b6e2714b3a274fa4236870001d6dfe44"
+
+old_data = {
+    "locations": [
+        {
+            "id": "source",
+            "coords": {
+                "lat": 51.51198245486377,
+                "lng": -0.1278277598563
+            }
+        },
+        {
+            "id": "destination",
+            "coords": {
+                "lat": 51.51198245486377,
+                "lng": -1.1278277598563
+            }
+        },
+    ],
+    "departure_searches": [
+        {
+            "id": "source-results",
+            "departure_location_id": "source",
+            "arrival_location_ids": ["source", "destination"],
+            "departure_time": datetime.datetime.now().isoformat(sep="T", timespec="auto"),
+            "travel_time": 9800,
+            "properties": [
+                "travel_time",
+                "distance"
+            ],
+            "transportation": {
+                "type": "driving"
+            }
+        }
+    ]
+}
+
+nodes = get_nodes()
+
+data = {
+    "locations": [
+        {
+            "id": node[2],
+            "coords": {
+                "lat": node[0],
+                "lng": node[1]
+            }
+        }
+        for node in nodes
+    ],
+    "departure_searches": [
+        {
+            "id": f"{destination_node[2]}-results",
+            "departure_location_id": destination_node[2],
+            "arrival_location_ids": [node[2] for node in nodes],
+            "departure_time": datetime.datetime.now().isoformat(sep="T", timespec="auto"),
+            "travel_time": 11800,
+            "properties": [
+                "travel_time",
+                "distance"
+            ],
+            "transportation": {
+                "type": "driving"
+            }
+        }
+
+        for destination_node in nodes
+    ]
+}
+
+
+response = requests.post(
+    'https://api.traveltimeapp.com/v4/time-filter',
+    headers={
+        'Content-Type': 'application/json',
+        'X-Application-Id': app_id,
+        'X-Api-Key': app_key
+    },
+    data=json.dumps(data)
+)
+
+
+print(response.status_code)
+
+print(json.dumps(response.json(), indent=2))
+
+exit(0)
 
 
 start = time.time()
 
 nodes = get_nodes()
 distances = get_distances_for_nodes(nodes)
-permutation, distance = solve_tsp_dynamic_programming(distances)
 
 print(f"finished solving in {time.time() - start}s")
 
-display_solution(nodes, permutation)
+# permutation, distance = solve_tsp_dynamic_programming(distances)
+
+# display_solution(nodes, permutation)

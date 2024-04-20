@@ -8,9 +8,401 @@ import time
 import csv
 import requests
 
+from key import api_key
+
 
 def get_distances_for_nodes(nodes):
     # nodes is a list of tuples (latitude, longitude)
+
+    endpoint = "https://maps.googleapis.com/maps/api/distancematrix/json?"
+
+    addresses = ""
+
+    # Set the source and destination addresses to the list of addresses that are passed in the nodes
+    for node in nodes:
+        addresses = addresses + node[2] + "|"
+    addresses = addresses[:-1]
+
+    url = endpoint + "destinations=" + addresses
+    url = url + "&origins=" + addresses
+    url = url + "&mode=driving&language=en-US"
+    url = url + "&key=" + api_key
+
+    # response = requests.get(url)
+    # data = response.json()
+
+    data = {
+        "destination_addresses":
+        [
+            "Bou Ismaïl, Algeria",
+            "Bourkika, Algeria",
+            "Chaiba, Algeria",
+            "Cherchell, Algeria",
+            "Damous, Algeria"
+        ],
+        "origin_addresses":
+        [
+            "Bou Ismaïl, Algeria",
+            "Bourkika, Algeria",
+            "Chaiba, Algeria",
+            "Cherchell, Algeria",
+            "Damous, Algeria"
+        ],
+        "rows":
+        [
+            {
+                "elements":
+                [
+                    {
+                        "distance":
+                        {
+                            "text": "1 m",
+                            "value": 0
+                        },
+                        "duration":
+                        {
+                            "text": "1 min",
+                            "value": 0
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "36.1 km",
+                            "value": 36133
+                        },
+                        "duration":
+                        {
+                            "text": "37 mins",
+                            "value": 2201
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "4.6 km",
+                            "value": 4605
+                        },
+                        "duration":
+                        {
+                            "text": "12 mins",
+                            "value": 720
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "56.2 km",
+                            "value": 56190
+                        },
+                        "duration":
+                        {
+                            "text": "50 mins",
+                            "value": 2972
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "107 km",
+                            "value": 106908
+                        },
+                        "duration":
+                        {
+                            "text": "1 hour 48 mins",
+                            "value": 6503
+                        },
+                        "status": "OK"
+                    }
+                ]
+            },
+            {
+                "elements":
+                [
+                    {
+                        "distance":
+                        {
+                            "text": "36.1 km",
+                            "value": 36071
+                        },
+                        "duration":
+                        {
+                            "text": "38 mins",
+                            "value": 2260
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "1 m",
+                            "value": 0
+                        },
+                        "duration":
+                        {
+                            "text": "1 min",
+                            "value": 0
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "37.1 km",
+                            "value": 37061
+                        },
+                        "duration":
+                        {
+                            "text": "39 mins",
+                            "value": 2363
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "35.1 km",
+                            "value": 35078
+                        },
+                        "duration":
+                        {
+                            "text": "41 mins",
+                            "value": 2439
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "85.8 km",
+                            "value": 85796
+                        },
+                        "duration":
+                        {
+                            "text": "1 hour 40 mins",
+                            "value": 5970
+                        },
+                        "status": "OK"
+                    }
+                ]
+            },
+            {
+                "elements":
+                [
+                    {
+                        "distance":
+                        {
+                            "text": "4.6 km",
+                            "value": 4596
+                        },
+                        "duration":
+                        {
+                            "text": "12 mins",
+                            "value": 705
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "33.9 km",
+                            "value": 33853
+                        },
+                        "duration":
+                        {
+                            "text": "35 mins",
+                            "value": 2122
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "1 m",
+                            "value": 0
+                        },
+                        "duration":
+                        {
+                            "text": "1 min",
+                            "value": 0
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "53.9 km",
+                            "value": 53910
+                        },
+                        "duration":
+                        {
+                            "text": "48 mins",
+                            "value": 2894
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "105 km",
+                            "value": 104629
+                        },
+                        "duration":
+                        {
+                            "text": "1 hour 47 mins",
+                            "value": 6424
+                        },
+                        "status": "OK"
+                    }
+                ]
+            },
+            {
+                "elements":
+                [
+                    {
+                        "distance":
+                        {
+                            "text": "57.0 km",
+                            "value": 57039
+                        },
+                        "duration":
+                        {
+                            "text": "51 mins",
+                            "value": 3074
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "36.2 km",
+                            "value": 36182
+                        },
+                        "duration":
+                        {
+                            "text": "42 mins",
+                            "value": 2522
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "58.5 km",
+                            "value": 58524
+                        },
+                        "duration":
+                        {
+                            "text": "54 mins",
+                            "value": 3210
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "1 m",
+                            "value": 0
+                        },
+                        "duration":
+                        {
+                            "text": "1 min",
+                            "value": 0
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "50.1 km",
+                            "value": 50114
+                        },
+                        "duration":
+                        {
+                            "text": "1 hour 15 mins",
+                            "value": 4506
+                        },
+                        "status": "OK"
+                    }
+                ]
+            },
+            {
+                "elements":
+                [
+                    {
+                        "distance":
+                        {
+                            "text": "107 km",
+                            "value": 106928
+                        },
+                        "duration":
+                        {
+                            "text": "1 hour 47 mins",
+                            "value": 6446
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "86.1 km",
+                            "value": 86071
+                        },
+                        "duration":
+                        {
+                            "text": "1 hour 38 mins",
+                            "value": 5894
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "108 km",
+                            "value": 108414
+                        },
+                        "duration":
+                        {
+                            "text": "1 hour 50 mins",
+                            "value": 6582
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "50.1 km",
+                            "value": 50124
+                        },
+                        "duration":
+                        {
+                            "text": "1 hour 13 mins",
+                            "value": 4382
+                        },
+                        "status": "OK"
+                    },
+                    {
+                        "distance":
+                        {
+                            "text": "1 m",
+                            "value": 0
+                        },
+                        "duration":
+                        {
+                            "text": "1 min",
+                            "value": 0
+                        },
+                        "status": "OK"
+                    }
+                ]
+            }
+        ],
+        "status": "OK"
+    }
 
     distances = np.zeros((len(nodes), len(nodes)))
 
@@ -53,130 +445,37 @@ def display_solution(nodes, permutation):
 def get_nodes():
     # From the returned result, we will assume that the source is the first node in the list
     # and the destination is the last node in the list
+    # we need to specify if the destination should be the last node or not, if it should, we will change
+    # the distance between the first and last node to be the minimum distance possible
 
     # File format is : WILAYA, Baladia, latitude, longitude
-    with open('wilayas.csv') as csvfile:
-        readCSV = csv.reader(csvfile, delimiter=',')
 
-        lines = list(readCSV)
-
-        # filtered = []
-        # np.random.seed(1)
-
-        # count = 10
-
-        # for i in range(0, count):
-        #     new_line = lines[np.random.randint(0, len(lines))]
-        #     if filtered.__contains__(new_line):
-        #         i -= 1
-        #     else:
-        #         filtered.append(new_line)
-
-        filtered = [line for line in lines if line[0] == "Tipaza"]
-        filtered = filtered[:9]
-
-        nodes = [(float(line[2]), float(line[3]), line[0] + "_" + line[1]) for line in filtered]
-
+    nodes = [
+        (36.642758, 2.6899362, "Bou Ismaïl, Tipaza, Algeria"),
+        (36.4942993, 2.4775236, "Bourkika, Tipaza, Algeria"),
+        (36.8276943, 7.7189892, "Chaiba, Tipaza, Algeria"),
+        (36.6075021, 2.1901982, "Cherchell, Tipaza, Algeria"),
+        (36.5487451, 1.705542, "Damous, Tipaza, Algeria"),
+        # (36.6737396, 2.7900902, "Douaouda, Tipaza, Algeria"),
+        # (36.6615638, 2.742117, "Fouka, Tipaza, Algeria"),
+        # (36.5718933, 1.9059603, "Gouraya, Tipaza, Algeria"),
+        # (36.5121198, 2.4142888, "Hadjout, Tipaza, Algeria"),
+        # (36.5740991, 2.0537607, "Hadjret Ennous, Tipaza, Algeria"),
+    ]
     return nodes
 
 
-app_id = "a2f023b2"
-app_key = "b6e2714b3a274fa4236870001d6dfe44"
-
-old_data = {
-    "locations": [
-        {
-            "id": "source",
-            "coords": {
-                "lat": 51.51198245486377,
-                "lng": -0.1278277598563
-            }
-        },
-        {
-            "id": "destination",
-            "coords": {
-                "lat": 51.51198245486377,
-                "lng": -1.1278277598563
-            }
-        },
-    ],
-    "departure_searches": [
-        {
-            "id": "source-results",
-            "departure_location_id": "source",
-            "arrival_location_ids": ["source", "destination"],
-            "departure_time": datetime.datetime.now().isoformat(sep="T", timespec="auto"),
-            "travel_time": 9800,
-            "properties": [
-                "travel_time",
-                "distance"
-            ],
-            "transportation": {
-                "type": "driving"
-            }
-        }
-    ]
-}
-
 nodes = get_nodes()
-
-data = {
-    "locations": [
-        {
-            "id": node[2],
-            "coords": {
-                "lat": node[0],
-                "lng": node[1]
-            }
-        }
-        for node in nodes
-    ],
-    "departure_searches": [
-        {
-            "id": f"{destination_node[2]}-results",
-            "departure_location_id": destination_node[2],
-            "arrival_location_ids": [node[2] for node in nodes],
-            "departure_time": datetime.datetime.now().isoformat(sep="T", timespec="auto"),
-            "travel_time": 11800,
-            "properties": [
-                "travel_time",
-                "distance"
-            ],
-            "transportation": {
-                "type": "driving"
-            }
-        }
-
-        for destination_node in nodes
-    ]
-}
-
-
-response = requests.post(
-    'https://api.traveltimeapp.com/v4/time-filter',
-    headers={
-        'Content-Type': 'application/json',
-        'X-Application-Id': app_id,
-        'X-Api-Key': app_key
-    },
-    data=json.dumps(data)
-)
-
-
-print(response.status_code)
-
-print(json.dumps(response.json(), indent=2))
-
-exit(0)
-
 
 start = time.time()
 
 nodes = get_nodes()
+
 distances = get_distances_for_nodes(nodes)
+
+permutation, distance = solve_tsp_dynamic_programming(distances)
+
 
 print(f"finished solving in {time.time() - start}s")
 
-# permutation, distance = solve_tsp_dynamic_programming(distances)
-
-# display_solution(nodes, permutation)
+display_solution(nodes, permutation)
